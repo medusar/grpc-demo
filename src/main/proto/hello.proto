@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.medusar.grpc.demo.hello";
+option java_outer_classname = "HelloProto";
+option objc_class_prefix = "HLW";
+
+package hello;
+
+// The greeting service definition.
+service Greeter {
+  // Sends a greeting
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+
+  rpc SendStream (stream HelloRequest) returns (HelloReply){}
+
+  rpc ReceiveSteam(HelloRequest) returns (stream HelloReply){}
+
+  rpc SendAndReceive(stream HelloRequest) returns (stream HelloReply){}
+}
+
+// The request message containing the user's name.
+message HelloRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings
+message HelloReply {
+  string message = 1;
+}
