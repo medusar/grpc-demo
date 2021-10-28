@@ -1,5 +1,6 @@
 package io.medusar.grpc.demo.hello;
 
+import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
 
@@ -82,5 +83,22 @@ public class GreeterService extends GreeterGrpc.GreeterImplBase {
                 responseObserver.onCompleted();
             }
         };
+    }
+
+    @Override
+    public void withoutParam(Empty request, StreamObserver<Empty> responseObserver) {
+        log.info("withoutParam invoked...");
+        //FIXME: 如果不调用onNext，会报错。。
+        responseObserver.onNext(Empty.newBuilder().build());
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void withoutParam2(NullMessage request, StreamObserver<NullMessage> responseObserver) {
+        log.info("withoutParam2 invoked...");
+        //TODO: 如果不调用onNext，会报错。在onCompleted之前，必须调用至少一次onNext.
+        //https://github.com/grpc/grpc-java/issues/6568#issuecomment-568537674
+//        responseObserver.onNext(NullMessage.newBuilder().build());
+        responseObserver.onCompleted();
     }
 }

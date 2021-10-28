@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+import "google/protobuf/empty.proto";
+
 option java_multiple_files = true;
 option java_package = "io.medusar.grpc.demo.hello";
 option java_outer_classname = "HelloProto";
@@ -12,11 +14,27 @@ service Greeter {
   // Sends a greeting
   rpc SayHello (HelloRequest) returns (HelloReply) {}
 
+  //client side stream
   rpc SendStream (stream HelloRequest) returns (HelloReply){}
 
+  //server side stream
   rpc ReceiveSteam(HelloRequest) returns (stream HelloReply){}
 
+  //bi-direction stream
   rpc SendAndReceive(stream HelloRequest) returns (stream HelloReply){}
+
+  //无参无返回值，grpc只能通过Empty来实现，或，可以通过传一个empty来实现
+  //需要导入 import "google/protobuf/empty.proto";
+  //https://stackoverflow.com/questions/29687243/protobuf-rpc-service-method-without-parameters
+  rpc WithoutParam(google.protobuf.Empty) returns (google.protobuf.Empty){}
+
+  //也可以定义一个空的message来实现
+  rpc WithoutParam2(NullMessage) returns (NullMessage){}
+}
+
+//空的message，用于无参处理
+message NullMessage{
+
 }
 
 // The request message containing the user's name.
