@@ -60,3 +60,28 @@ serverBuilder
         "message": "hello medusar"
     }
    ```
+   Client端stream:
+   ```
+       grpcurl -plaintext -d @  127.0.0.1:6666 hello.Greeter/SendAndReceive <<EOF                                                                                                                                                                                   [14:32:35]
+         {"name":"jason"}
+         {"name":"jason"}
+         {"name":"jason"}
+         {"name":"jason"}
+         {"name":"jason"}
+         EOF
+         {
+         "message": "hi jason"
+         }
+         {
+         "message": "hi jason"
+         }
+         {
+         "message": "hi jason"
+         }
+         {
+         "message": "hi jason"
+         }
+         {
+         "message": "hi jason"
+         }
+   ```
