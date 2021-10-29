@@ -4,6 +4,7 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.protobuf.services.ProtoReflectionService;
 import io.medusar.grpc.demo.hello.GreeterService;
+import io.medusar.interceptor.ServerHeaderInterceptor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -23,6 +24,7 @@ public class GrpcServer {
         this.server = serverBuilder
                 .addService(new GreeterService()) //添加提供的服务
                 .addService(ProtoReflectionService.newInstance()) //反射服务，方便查看服务信息或测试调用
+                .intercept(new ServerHeaderInterceptor())   //拦截器
                 .build();
     }
 
@@ -40,4 +42,6 @@ public class GrpcServer {
     public void stop() {
         server.shutdown();
     }
+
+
 }
